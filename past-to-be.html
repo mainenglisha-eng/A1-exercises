@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past To Be Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .past-quiz {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 25px;
+            border: 3px solid #f43f5e;
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.3);
+            max-width: 800px;
+            width: 100%;
+            user-select: none;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: #f43f5e;
+            text-shadow: 0 0 10px #f43f5e;
+            text-transform: uppercase;
+        }
+        .q-row {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid #f43f5e;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        select {
+            background: #1e293b;
+            color: #fff;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            outline: none;
+            transition: 0.3s;
+        }
+        .correct { border-color: #10b981 !important; background: #064e3b !important; }
+        .incorrect { border-color: #ef4444 !important; background: #7f1d1d !important; }
+        b { color: #f43f5e; }
+        .tag { color: #fbbf24; font-size: 0.8em; font-weight: bold; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="past-quiz">
+    <h1>🕹️ Was / Were Challenge</h1>
+    <p style="text-align: center; color: #94a3b8;">Select the correct option. It turns <b>green</b> if correct!</p>
+    <hr style="border: 0.5px solid #334155; margin-bottom: 20px;">
+
+    <div id="quiz-container"></div>
+</div>
+
+<script>
+    const exercises = [
+        { q: "1. The <b>children</b>", options: ["was", "were"], ans: "were", note: "[PLURAL]" },
+        { q: "2. <b>I</b>", options: ["was", "were"], ans: "was", note: "" },
+        { q: "3. The <b>mouse</b>", options: ["was", "were"], ans: "was", note: "" },
+        { q: "4. <b>People</b>", options: ["was", "were"], ans: "were", note: "[IRREGULAR]" },
+        { q: "5. ", options: ["Was", "Were"], ans: "Were", post: "<b>you</b> at home?", note: "[QUESTION]" },
+        { q: "6. My <b>teeth</b>", options: ["was", "were"], ans: "were", note: "" },
+        { q: "7. It", options: ["was", "were"], ans: "was", note: "a sunny day." },
+        { q: "8. The <b>women</b>", options: ["was", "were"], ans: "were", note: "" },
+        { q: "9. That <b>person</b>", options: ["wasn't", "weren't"], ans: "wasn't", note: "[NEGATIVE]" },
+        { q: "10. <b>Mice</b>", options: ["was", "were"], ans: "were", note: "" },
+        { q: "11. <b>We</b>", options: ["was", "were"], ans: "were", note: "" },
+        { q: "12. The <b>goose</b>", options: ["was", "were"], ans: "was", note: "" },
+        { q: "13. ", options: ["Was", "Were"], ans: "Was", post: "<b>your child</b> sick?", note: "[QUESTION]" },
+        { q: "14. The <b>sheep</b> (plural)", options: ["was", "were"], ans: "were", note: "" },
+        { q: "15. <b>Men</b>", options: ["was", "were"], ans: "were", note: "" },
+        { q: "16. <b>My foot</b>", options: ["was", "were"], ans: "was", note: "" },
+        { q: "17. <b>They</b>", options: ["wasn't", "weren't"], ans: "weren't", note: "[NEGATIVE]" },
+        { q: "18. ", options: ["Was", "Were"], ans: "Were", post: "the <b>geese</b> flying?", note: "" },
+        { q: "19. There", options: ["was", "were"], ans: "was", note: "an <b>ox</b>." },
+        { q: "20. <b>You</b>", options: ["was", "were"], ans: "were", note: "the winner!" }
+    ];
+
+    const container = document.getElementById('quiz-container');
+
+    exercises.forEach((ex, index) => {
+        const div = document.createElement('div');
+        div.className = 'q-row';
+        
+        let html = `<span>${ex.q}</span>`;
+        
+        const select = document.createElement('select');
+        select.innerHTML = `<option value="">---</option>` + ex.options.map(o => `<option value="${o}">${o}</option>`).join('');
+        
+        select.onchange = function() {
+            if (this.value === ex.ans) {
+                this.className = 'correct';
+            } else if (this.value === "") {
+                this.className = '';
+            } else {
+                this.className = 'incorrect';
+            }
+        };
+
+        div.innerHTML = html;
+        div.appendChild(select);
+        if(ex.post) div.innerHTML += `<span>${ex.post}</span>`;
+        if(ex.note) div.innerHTML += `<span class="tag">${ex.note}</span>`;
+        
+        container.appendChild(div);
+    });
+</script>
+
+</body>
+</html>
